@@ -41,3 +41,14 @@ while open:
 # vc.release() ？？？
 cv2.destroyAllWindows()
 ```
+
+### 读取部分图像数据
+
+```python
+img = cv2.imread('C:/Users/zichuana/Desktop/1.jpg')
+jiequ = img[0:50, 0:200]
+cv2.imshow('jiequ', jiequ)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+```
+
