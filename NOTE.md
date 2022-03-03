@@ -19,3 +19,25 @@ cv2.destroyAllWindows()
 
 ```
 
+### 视频输入输出
+
+```python
+vc = cv2.VideoCapture('C:/Users/zichuana/Desktop/1.mp4')
+# 检查是否打开正确
+if vc.isOpened():
+    open, frame = vc.read()  # vc.read() 取帧
+else:
+    open = False
+
+while open:
+    ret, frame = vc.read()
+    if frame is None:
+        break
+    if ret is True:  # 读帧没有问题
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  # 灰度
+        cv2.imshow('re', gray)  # 展示
+        if cv2.waitKey(100) & 0xFF == 27:  # 64位与27比较
+            break
+# vc.release() ？？？
+cv2.destroyAllWindows()
+```
