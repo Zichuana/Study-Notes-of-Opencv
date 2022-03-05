@@ -2,13 +2,13 @@
 
 ```python
 import cv2
-img = cv2.imread('C:/Users/zichuana/Desktop/1.jpg')  # 路径
-cv2.imshow('t', img)  # 图片输出
+img1 = cv2.imread('C:/Users/zichuana/Desktop/1.jpg')  # 路径
+cv2.imshow('t', img1)  # 图片输出
 cv2.waitKey(1000)  # 0表示任意键终止，cv2.waitKey(10000)为毫秒级，10000为10秒
 cv2.destroyAllWindows()  # 关闭窗口，（）里不指定任何参数，则删除所有窗口，删除特定的窗口，往（）输入特定的窗口值。
 
-img = cv2.imread('C:/Users/zichuana/Desktop/1.jpg', cv2.IMREAD_GRAYSCALE)  # 灰度图
-cv2.imshow('t2', img)
+img2 = cv2.imread('C:/Users/zichuana/Desktop/1.jpg', cv2.IMREAD_GRAYSCALE)  # 灰度图
+cv2.imshow('t2', img2)
 cv2.waitKey(1000)
 cv2.destroyAllWindows()
 
@@ -50,5 +50,22 @@ jiequ = img[0:50, 0:200]
 cv2.imshow('jiequ', jiequ)
 cv2.waitKey(1000)
 cv2.destroyAllWindows()
+```
+
+### 颜色通道提取
+
+```python
+b, g, r = cv2.split(img1)  # b.shape
+img1 = cv2.merge((b, g, r))
+# 只保留R
+cur_img1 = img1.copy()  # ':'通配符
+# cur_img1[:, :, :] = 255 白
+# cur_img1[:, :, :] = 0 黑
+cur_img1[:, :, 0] = 0
+cur_img1[:, :, 1] = 0
+cv2.imshow('R', cur_img1)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+# B-0 G-1 R-2
 ```
 
