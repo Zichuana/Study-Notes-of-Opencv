@@ -69,3 +69,24 @@ cv2.destroyAllWindows()
 # B-0 G-1 R-2
 ```
 
+### 边界填充
+
+```python
+top_size, bottom_size, left_size, right_size = (50, 50, 50, 50)
+
+replicate = cv2.copyMakeBorder(img1, top_size, bottom_size, left_size, right_size, borderType=cv2.BORDER_REPLICATE)
+constant = cv2.copyMakeBorder(img1, top_size, bottom_size, left_size, right_size, borderType=cv2.BORDER_CONSTANT, value=0)
+# cv2.imshow('t', replicate)
+# cv2.waitKey(1000)
+# cv2.destroyAllWindows()
+plt.subplot(212), plt.imshow(replicate), plt.title('ORIGINAL')  # subplot()内参数表位置
+plt.subplot(222), plt.imshow(constant), plt.title('ORIGINAL')
+plt.show()
+# borderType参数
+# BORDER_REPLICATE 复制 复制最边缘像素
+# BORDER_REFLECT 反射 hgfedcba|abcdefgh|hgfedcba
+# BORDER_REFLECT_101 反射 hgfedcb|abcdefgh|gfedcba
+# BORDER_WRAP 外包装 abcdefgh|abcdefgh|abcdefgh
+# BORDER_CONSTANT 填充
+```
+
