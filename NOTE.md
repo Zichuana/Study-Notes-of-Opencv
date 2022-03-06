@@ -122,3 +122,35 @@ cv2.imshow('test', res)
 cv2.waitKey(1000)
 cv2.destroyAllWindows()
 ```
+
+### 图像阈值
+
+```python
+'''
+ret, dst = cv2.threshold(src, thresh, maxval, type)
+src:输入图，只能输入单通道图像，通常来说是灰度图
+dst:输出图
+thresh:阈值
+maxval:当像素值超过了阈值（或者小于阈值，根据type来决定），所赋予的值
+type:二值化操作的类型，包括以下5种类型
+1. cv2.THRESH_BINARY 超过阈值部分取最大值，否则取0
+2. cv2.THRESH_BINARY_INV 1的反转
+3. cv2.THRESH_TRUNC 大于阈值部分设为阈值，否则不变
+4. cv2.THRESH_TOZERO 大于阈值部分不改变，否则设为0
+5. cv2.THRESH_TOZERO_INV 4的反转
+'''
+ret, thresh1 = cv2.threshold(img2, 127, 255, cv2.THRESH_BINARY)
+ret, thresh2 = cv2.threshold(img2, 127, 255, cv2.THRESH_BINARY_INV)
+ret, thresh3 = cv2.threshold(img2, 127, 255, cv2.THRESH_TRUNC)
+ret, thresh4 = cv2.threshold(img2, 127, 255, cv2.THRESH_TOZERO)
+ret, thresh5 = cv2.threshold(img2, 127, 255, cv2.THRESH_TOZERO_INV)
+
+titles = ['1', '2', '3', '4', '5']
+images = [thresh1, thresh2, thresh3, thresh4, thresh5]
+
+for i in range(5):
+    plt.subplot(3, 2, i + 1), plt.imshow(images[i], 'gray')
+    plt.title(titles[i])
+    plt.xticks([]), plt.yticks([])  # 警用刻度以及标签
+plt.show()
+```
