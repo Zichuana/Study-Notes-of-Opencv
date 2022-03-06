@@ -109,3 +109,16 @@ cv2.destroyAllWindows()
 '''
 ```
 
+### 图像融合
+
+```python
+img3 = cv2.imread('C:/Users/zichuana/Desktop/2.jpg')
+print(img1.shape)
+print(img3.shape)
+img3 = cv2.resize(img3, (835, 501))  # img3 = cv2.resize(img3, (0, 0), fx=?, fy=?) 比例放缩
+print(img3.shape)
+res = cv2.addWeighted(img1, 0.4, img3, 0.6, 0)
+cv2.imshow('test', res)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+```
