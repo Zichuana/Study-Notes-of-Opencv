@@ -90,3 +90,13 @@ plt.show()
 # BORDER_CONSTANT 填充
 ```
 
+### 图像数值计算
+
+```python
+img12 = img1 + 10
+print(img1[:5, :, 0])
+print(img12[:5, :, 0])
+print((img1 + img12)[:5, :, 0])  # 相当于%256
+print(cv2.add(img1, img12)[:5, :, 0])  # >=255 -> 255 ; <255 -> x
+```
+
