@@ -98,5 +98,14 @@ print(img1[:5, :, 0])
 print(img12[:5, :, 0])
 print((img1 + img12)[:5, :, 0])  # 相当于%256
 print(cv2.add(img1, img12)[:5, :, 0])  # >=255 -> 255 ; <255 -> x
+'''
+cv2.imshow('test', img1+img12)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+
+cv2.imshow('test', cv2.add(img1, img12))
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+'''
 ```
 
