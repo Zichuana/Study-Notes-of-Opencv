@@ -154,3 +154,34 @@ for i in range(5):
     plt.xticks([]), plt.yticks([])  # 警用刻度以及标签
 plt.show()
 ```
+
+### 图像平滑处理
+
+```python
+import cv2
+import matplotlib.pyplot as plt
+
+# 图像平滑处理
+img1 = cv2.imread('C:/Users/zichuana/Desktop/3.jpg')  # 原始图像输入输出
+cv2.imshow('img1', img1)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+# 均值滤波，简单的平均卷积操作
+bl1 = cv2.blur(img1, (3, 3))  # 矩阵参数最好为奇数
+cv2.imshow('bl1', bl1)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+# 方框滤波
+# 该情况下和均值滤波一样
+box1 = cv2.boxFilter(img1, -1, (3, 3), normalize=True)  # 参数-1表示颜色通道一致，通常情况下是-1
+cv2.imshow('box1', box1)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+# normalize=False情况
+box2 = cv2.boxFilter(img1, -1, (3, 3), normalize=False)  # >=255 白色
+cv2.imshow('box2', box2)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+
+```
+
