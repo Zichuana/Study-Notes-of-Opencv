@@ -161,7 +161,7 @@ plt.show()
 import cv2
 import matplotlib.pyplot as plt
 
-# 图像平滑处理
+# 图像平滑处理（通俗就是给图像去除’噪音‘）
 img1 = cv2.imread('C:/Users/zichuana/Desktop/3.jpg')  # 原始图像输入输出
 cv2.imshow('img1', img1)
 cv2.waitKey(1000)
@@ -180,6 +180,17 @@ cv2.destroyAllWindows()
 # normalize=False情况
 box2 = cv2.boxFilter(img1, -1, (3, 3), normalize=False)  # >=255 白色
 cv2.imshow('box2', box2)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+# 高斯与中值滤波
+# 高斯（根据权重矩阵，距离越近的作用越大, 同样也是去除噪音点）
+Gauss = cv2.GaussianBlur(img1, (5, 5), 1)
+cv2.imshow('Gauss', Gauss)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+# 中值滤波 （去排序取中位数为中心）除滤波操作的话 这个是最好的
+median = cv2.medianBlur(img1, 5)
+cv2.imshow("median", median)
 cv2.waitKey(1000)
 cv2.destroyAllWindows()
 
