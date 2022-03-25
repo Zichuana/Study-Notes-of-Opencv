@@ -202,3 +202,50 @@ cv2.destroyAllWindows()
 
 ```
 
+### 型态学 腐蚀操作
+
+```python
+# （假设是一个手臂的近照片，上面有毛毛，可以除去毛毛）
+img2 = cv2.imread('C:/Users/zichuana/Desktop/4.jpg', cv2.IMREAD_GRAYSCALE)
+cv2.imshow('img2', img2)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+
+kn1 = np.ones((5, 5), np.uint8)
+es1 = cv2.erode(img2, kn1, iterations=1)  # iterations 迭代次数
+cv2.imshow("es1", es1)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+
+kn1 = np.ones((5, 5), np.uint8)
+es1 = cv2.erode(img2, kn1, iterations=3)  # iterations 迭代次数
+cv2.imshow("es1", es1)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+
+
+ret, img3 = cv2.threshold(img2, 177, 255, cv2.THRESH_BINARY)
+cv2.imshow('img3', img3)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+
+kn2 = np.ones((5, 5), np.uint8)
+es2 = cv2.erode(img3, kn2, iterations=1)  # iterations 迭代次数
+cv2.imshow("es2", es2)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+
+img4 = cv2.imread('C:/Users/zichuana/Desktop/4.jpg')
+cv2.imshow("img4", img4)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+
+kn3 = np.ones((5, 5), np.uint8)
+es3 = cv2.erode(img3, kn3, iterations=1)  # iterations 迭代次数 色彩腐蚀次数
+# 类似与水的浸润 越迭代次数越多，越浸蚀
+cv2.imshow("es2", es3)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()  # 非灰度图 出现的图片接近1
+
+```
+
