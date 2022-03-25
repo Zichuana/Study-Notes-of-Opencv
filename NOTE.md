@@ -193,6 +193,12 @@ median = cv2.medianBlur(img1, 5)
 cv2.imshow("median", median)
 cv2.waitKey(1000)
 cv2.destroyAllWindows()
+# 一次性拼接展示所有图像
+res = np.hstack((bl1, box1, Gauss, median))
+cv2.imshow("res", res)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
 
 ```
 
