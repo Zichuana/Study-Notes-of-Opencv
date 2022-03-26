@@ -265,7 +265,7 @@ cv2.destroyAllWindows()  # 非灰度图 出现的图片接近0
 ### 开闭运算
 
 ```python
-iimport cv2
+import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -278,7 +278,7 @@ cv2.destroyAllWindows()
 cv2.imshow("thresh2", thresh2)
 cv2.waitKey(1000)
 cv2.destroyAllWindows()
-# 开运算 先腐蚀再膨胀 255 -> 0 -> 255
+# 开运算 先腐蚀再膨胀 255 -> 0 -> 255 (由上述假设 这里可以想象成毛毛没有，并且胳膊肘粗细不变)
 mid1 = np.ones((5, 5), np.uint8)  # unit8 图片矩阵适使用的数据类型
 opening = cv2.morphologyEx(thresh1, cv2.MORPH_OPEN, mid1)
 cv2.imshow("opening", opening)
@@ -313,8 +313,6 @@ cv2.destroyAllWindows()
 ### 梯度计算
 
 ```python
-
-# 梯度计算
 mid2 = np.ones((7, 7), np.uint8)
 result1 = cv2.dilate(thresh2, mid2, iterations=3)
 result2 = cv2.erode(thresh2, mid2, iterations=3)
@@ -329,3 +327,25 @@ cv2.waitKey(1000)
 cv2.destroyAllWindows()
 ```
 
+### 礼貌与黑帽
+
+```python
+# 礼貌 = 原始图像 - 开运算结果
+# 黑帽 = 闭运算结果 - 原始输入
+# 礼貌 = 毛毛(瑕疵)
+# 黑帽 = 轮廓
+
+# 礼貌
+tophat = cv2.morphologyEx(thresh2, cv2.MORPH_TOPHAT, mid1)
+rus3 = np.hstack((thresh2, opening2, tophat))
+cv2.imshow("rus3", rus3)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+
+# 黑帽
+blackhat = cv2.morphologyEx(thresh2, cv2.MORPH_BLACKHAT, mid1)
+rus4 = np.hstack((thresh2, closing2, blackhat))
+cv2.imshow("rus4", rus4)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+```
