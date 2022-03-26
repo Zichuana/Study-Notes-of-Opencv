@@ -262,3 +262,51 @@ cv2.destroyAllWindows()  # 非灰度图 出现的图片接近0
 
 ```
 
+### 开闭运算
+
+```python
+iimport cv2
+import matplotlib.pyplot as plt
+import numpy as np
+
+img1 = cv2.imread("C:/Users/zichuana/Desktop/1.jpg", cv2.IMREAD_GRAYSCALE)
+ret, thresh1 = cv2.threshold(img1, 127, 255, cv2.THRESH_BINARY_INV)
+ret, thresh2 = cv2.threshold(img1, 127, 255, cv2.THRESH_BINARY)
+cv2.imshow("thresh1", thresh1)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+cv2.imshow("thresh2", thresh2)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+# 开运算 先腐蚀再膨胀 255 -> 0 -> 255
+mid1 = np.ones((5, 5), np.uint8)  # unit8 图片矩阵适使用的数据类型
+opening = cv2.morphologyEx(thresh1, cv2.MORPH_OPEN, mid1)
+cv2.imshow("opening", opening)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+# 闭运算 先膨胀再腐蚀
+closing = cv2.morphologyEx(thresh1, cv2.MORPH_CLOSE, mid1)
+cv2.imshow("closing", closing)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+
+opening2 = cv2.morphologyEx(thresh2, cv2.MORPH_OPEN, mid1)
+cv2.imshow("opening", opening2)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+# 闭运算 先膨胀再腐蚀 0 -> 255 -> 0
+closing2 = cv2.morphologyEx(thresh2, cv2.MORPH_CLOSE, mid1)
+cv2.imshow("closing", closing2)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+
+res1 = np.hstack((thresh1, opening, closing))
+cv2.imshow("res1", res1)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+res2 = np.hstack((thresh2, opening2, closing2))
+cv2.imshow("res2", res2)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+```
+
