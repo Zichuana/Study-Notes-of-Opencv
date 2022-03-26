@@ -310,3 +310,22 @@ cv2.waitKey(1000)
 cv2.destroyAllWindows()
 ```
 
+### 梯度计算
+
+```python
+
+# 梯度计算
+mid2 = np.ones((7, 7), np.uint8)
+result1 = cv2.dilate(thresh2, mid2, iterations=3)
+result2 = cv2.erode(thresh2, mid2, iterations=3)
+res3 = np.hstack((result1, result2))
+cv2.imshow("res3", res3)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+
+gra = cv2.morphologyEx(thresh2, cv2.MORPH_GRADIENT, mid2)
+cv2.imshow("gra", gra)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+```
+
