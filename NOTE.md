@@ -310,7 +310,7 @@ cv2.waitKey(1000)
 cv2.destroyAllWindows()
 ```
 
-### 梯度计算
+### 膨胀腐蚀差运算（梯度）
 
 ```python
 mid2 = np.ones((7, 7), np.uint8)
@@ -406,5 +406,37 @@ lap = cv2.convertScaleAbs(lap)
 
 res1 = np.hstack((sobel, scharr, lap))
 cvshow2(res1, "res1")
+```
+
+### Canny边缘检测
+
+```python
+import cv2
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Canny边缘检测
+# 高斯滤波器，以平滑图像，过滤噪音点
+# 计算图像中每个像素点的梯度强度和方向
+# 应用非极大值（non-maximum suppression）抑制，以消除边缘检测带来的杂散影响（体现大的梯度值，展现最明显的差异边界）*视频讲解P21 目前不是很懂
+# 应用双阈值（Double-Threshold）检测来确定真实和潜在的边缘（1 梯度值>maxval:处理为边界 2 minval<梯度值<maxval:连有边界则保留，否则舍弃 3 梯度值<minval:则舍弃）
+# 通过抑制孤立的弱边缘最终完成边缘检测
+def cvshow1(img,name):
+    cv2.imshow(name, img)
+    cv2.waitKey(1000)
+    cv2.destroyAllWindows()
+
+def cvshow2(img,name):
+    cv2.imshow(name, img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+img1 = cv2.imread('C:/Users/zichuana/Desktop/1.jpg', cv2.IMREAD_GRAYSCALE)
+cvshow1(img1, "img1")
+v1 = cv2.Canny(img1, 50, 150)
+v2 = cv2.Canny(img1, 200, 250)
+res = np.hstack((v1, v2))
+cvshow2(res, "res")
+
 ```
 
