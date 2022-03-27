@@ -349,3 +349,28 @@ cv2.imshow("rus4", rus4)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 ```
+
+### 梯度计算
+
+```python
+import cv2
+import matplotlib.pyplot as plt
+
+def cvshow1(img,name):
+    cv2.imshow(name, img)
+    cv2.waitKey(1000)
+    cv2.destroyAllWindows()
+
+def cvshow2(img,name):
+    cv2.imshow(name, img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+# 梯度计算
+img1 = cv2.imread("C:/Users/zichuana/Desktop/1.jpg")
+cvshow1(img1, "img1")
+sobel = cv2.Sobel(img1, cv2.CV_64F, 1, 0, ksize=3)
+# cv2.Sobel(图像,图像深度（0-255，当计算结果小于0时需要使得等于0）,x轴（含权重，矩阵的相乘得到）,y轴,算子的大小（矩阵的大小）)
+cvshow2(sobel, "sobel")
+
+```
+
