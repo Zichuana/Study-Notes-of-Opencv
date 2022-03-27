@@ -389,5 +389,22 @@ cvshow1(res, "res")
 sobel3 = cv2.Sobel(img1, cv2.CV_64F, 1, 1, ksize=3)
 sobel3 = cv2.convertScaleAbs(sobel3)
 cvshow1(sobel3, "sobel3")  # 不建议直接计算，先计算再求和
+
+# Scharr算子
+# 原理与sobel 算子差不多 但是数值大一些，对结果的差异更敏感
+# laplacian算子
+# 存在二阶导 对变化更加敏感 对噪音点也会很敏感 矩阵是四个边缘点与中间点进行比较 不适合单独使用
+
+scharrx = cv2.Scharr(img1, cv2.CV_64F, 1, 0)
+scharry = cv2.Scharr(img1, cv2.CV_64F, 0, 1)
+scharrx = cv2.convertScaleAbs(scharrx)
+scharry = cv2.convertScaleAbs(scharry)
+scharr = cv2.addWeighted(scharrx, 0.5, scharry, 0.5, 0)
+
+lap = cv2.Laplacian(img1, cv2.CV_64F)
+lap = cv2.convertScaleAbs(lap)
+
+res1 = np.hstack((sobel, scharr, lap))
+cvshow2(res1, "res1")
 ```
 
