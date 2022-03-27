@@ -355,6 +355,7 @@ cv2.destroyAllWindows()
 ```python
 import cv2
 import matplotlib.pyplot as plt
+import numpy as np
 
 def cvshow1(img,name):
     cv2.imshow(name, img)
@@ -365,12 +366,28 @@ def cvshow2(img,name):
     cv2.imshow(name, img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
-# 梯度计算
+# 梯度计算 （可以用于描述轮廓-灰度图效果好看）
+# sobel 算子
 img1 = cv2.imread("C:/Users/zichuana/Desktop/1.jpg")
 cvshow1(img1, "img1")
-sobel = cv2.Sobel(img1, cv2.CV_64F, 1, 0, ksize=3)
-# cv2.Sobel(图像,图像深度（0-255，当计算结果小于0时需要使得等于0）,x轴（含权重，矩阵的相乘得到）,y轴,算子的大小（矩阵的大小）)
-cvshow2(sobel, "sobel")
+sobel1 = cv2.Sobel(img1, cv2.CV_64F, 0, 1, ksize=3)
+# cv2.Sobel(图像,图像深度（0-255，当计算结果小于0时需要使得等于0也就是截断成0）,x轴（含权重，矩阵的相乘得到）,y轴,算子的大小（矩阵的大小）)
+cvshow1(sobel1, "sobel")
+sobel1 = cv2.convertScaleAbs(sobel1)  # 使其不截断，进行取绝对值操作
+cvshow1(sobel1, "sobel")
+sobel2 = cv2.Sobel(img1, cv2.CV_64F, 1, 0, ksize=3)
+# cv2.Sobel(图像,图像深度（0-255，当计算结果小于0时需要使得等于0也就是截断成0）,x轴（含权重，矩阵的相乘得到）,y轴,算子的大小（矩阵的大小）)
+cvshow1(sobel2, "sobel2")
+sobel2 = cv2.convertScaleAbs(sobel2)  # 使其不截断，进行取绝对值操作
+cvshow1(sobel2, "sobel2")
 
+sobel = cv2.addWeighted(sobel1, 0.5, sobel2, 0.5, 0)  # 权重 权重 偏置项
+cvshow1(sobel, "sobel")
+res = np.hstack((sobel1, sobel2, sobel))
+cvshow1(res, "res")
+
+sobel3 = cv2.Sobel(img1, cv2.CV_64F, 1, 1, ksize=3)
+sobel3 = cv2.convertScaleAbs(sobel3)
+cvshow1(sobel3, "sobel3")  # 不建议直接计算，先计算再求和
 ```
 
