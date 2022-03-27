@@ -440,3 +440,37 @@ cvshow2(res, "res")
 
 ```
 
+### 图像金字塔
+
+```python
+# 图像金字塔定义
+# 金字塔尖到底 向上采样 放大 1 将Gi与高斯内核卷积 2 将所有偶数行和列去除
+# 金字塔底到尖 向下采用 缩小
+# 1 将图像再每个方向扩大为原来的两倍，新增的行和列以0填充
+# 2 使用先前同样的内核（乘以4）与放大后的图像卷积，获得近似值
+
+# 金字塔制作
+up = cv2.pyrUp(img1)  # 向上
+down = cv2.pyrDown(img1)  # 向下
+print("img1:", img1.shape)
+print("up:", up.shape)
+print("down:", down.shape)
+cvshow1(img1, "img1")
+cvshow1(up, "up")
+cvshow1(down, "down")
+# 先向上再向下 图像损失
+# 拉普拉斯金字塔 1低通滤波 2缩小尺寸 3放大尺寸 4图像相减
+down_up = cv2.pyrUp(down)
+print("down_up", down_up.shape)
+# res1 = img1-down_up
+# cvshow1(res1, "res1")  # 不能成功，需要shape相同
+# img1 = cv2.copyMakeBorder(img1, 0.5, 0.5, 0.5, 0.5, borderType=cv2.BORDER_CONSTANT) 参数不能指定float型无法进行边界填充
+# print("img1", img1.shape)
+# res1 = img1-down_up
+# cvshow1(res1, "res1")
+img1 = img1.resize((502, 836))  # AttributeError: 'NoneType' object has no attribute 'shape'
+print("img1", img1.shape)
+res1 = img1-down_up
+cvshow1(res1, "res1")
+```
+
