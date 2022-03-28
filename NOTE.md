@@ -474,3 +474,87 @@ res1 = img1-down_up
 cvshow1(res1, "res1")
 ```
 
+### 轮廓检测与特征
+
+```python
+import cv2
+import matplotlib.pyplot as plt
+import numpy as np
+
+def cvshow1(img,name):
+    cv2.imshow(name, img)
+    cv2.waitKey(1500)
+    cv2.destroyAllWindows()
+
+def cvshow2(img,name):
+    cv2.imshow(name, img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+img1 = cv2.imread('C:/Users/zichuana/Desktop/1.jpg')
+# 轮廓检测
+# cv2.findContours(img, mode, method)
+# mode:轮廓检索模式
+# RETR_EXTERNAL 只检索最外面的轮廓
+# RETR_LIST 检索所有的轮廓，并将其保存到一条链表当中
+# RETR_CCOMP 检索所有轮廓，并将他们组织为两层：顶层是各部分的外部边界，第二层是空洞的边界
+# RETR_TREE 检索所有的轮廓，并重构嵌套轮廓的整个层次（最常用）
+# method:轮廓逼近方法
+# CHAIN_APPROX_NOME:以Freeman链码的方式输出轮廓，所有其他方法输出多边形（顶点的序列）
+# CHAIN_APPROX_SIMPLE:压缩水平的、垂直的和斜的部分，也就是说，函数只保留他们的终点部分
+gray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)  # 转灰度
+ret, thresh1 = cv2.threshold(gray1, 127, 255, cv2.THRESH_BINARY)  # 阈值
+cvshow1(thresh1, "thresh1")
+
+binary, contours, hierarchy = cv2.findContours(thresh1, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+# binary 也就是thresh1, contours 图像轮廓信息（list格式）, hierarchy 层级（结果保存）
+# 需要copy原始img1图像 操作轮廓操作会后修改原图
+
+# 绘制轮廓
+img2 = img1.copy()
+res = cv2.drawContours(img2, contours, -1, (0, 0, 255), 2)
+# 第三个参数默认为-1 （画第几个轮廓？，-1全部）
+# 第四个参数（B，G，R）(0,0,255)红色
+# 第五参数轮廓线条的宽带
+cvshow1(img2, "img2")
+
+img3 = img1.copy()
+res2 = cv2.drawContours(img3, contours, 77, (0, 0, 255), 2)
+cvshow1(img3, "img3")
+
+# 轮廓特征
+cnt = contours[77]  # 取第77个轮廓
+# 面积
+print(cv2.contourArea(cnt))
+# 周长，True表示闭合
+print(cv2.arcLength(cnt, True))
+
+# 轮廓近似
+# 取点到直线的最长距离是否大于某一个阈值，如果小于，说明这条直线可以，大于由该点开始在做直线重复操作（不断二分）
+epsilon = 0.1*cv2.arcLength(cnt, True)
+approx = cv2.approxPolyDP(cnt, epsilon, True)
+img4 = img1.copy()
+res = cv2.drawContours(img4, [approx], -1, (0, 0, 255), 2)
+cvshow1(res, "res")
+
+# 外接矩形
+x, y, w, h = cv2.boundingRect(cnt)  # 必须指定是哪一个轮廓
+img4 = cv2.rectangle(img4, (x, y), (x+w, y+h), (0, 255, 0), 2)
+cvshow1(img4, "img5")
+
+area1 = cv2.contourArea(cnt)
+x, y, w, h = cv2.boundingRect(cnt)
+area2 = w*h
+extent = area1/area2
+print("轮廓面积与边界面积比", extent)
+extent = float(area1)/area2
+print("轮廓面积与边界面积比", extent)
+
+# 外接圆
+(x, y), radius = cv2.minEnclosingCircle(cnt)
+center = (int(x), int(y))
+radius = int(radius)
+img5 = cv2.circle(img4, center, radius, (0, 255, 0), 2)
+cvshow1(img4, "img4")
+```
+
