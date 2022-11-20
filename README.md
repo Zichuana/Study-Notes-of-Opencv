@@ -16,12 +16,25 @@
 >单目标
 
 - 转灰度匹配
-`template_matching_gray`  
+`template_matching_gray.py`  
 结果如图`tematch_gray.png`所示  
 ![image](./tematch_gray.png)  
 - RGB匹配
-`template_matching_rgb`  
+`template_matching_rgb.py`  
 结果如图`tematch_rgb1.png`所示  
 ![image](./tematch_rgb1.png)  
 修改通道后如图`tematch_rgb2.png`所示  
-![image](./tematch_rgb2.png)  
+![image](./tematch_rgb2.png) 
+>多目标
+
+- 转灰度匹配
+`template_matching_much_gray.py`  
+结果如图`template_matching_much_gray.png`所示  
+![image](./template_matching_much_gray.png)  
+- RGB匹配
+`template_matching_much_rgb.py`  
+结果如图`template_matching_much_rgb.png`所示  
+![image](./template_matching_much_rgb.png)  
+这里假设不做更改，按照copy来的源码进行展示如图`error.png`  
+![image](./error.png)  
+在当前的区域内，存在多个小于当前指定阈值`threshold`的情况，所以将它们都做了标记，需要对阈值`threshold`进行调整。  
